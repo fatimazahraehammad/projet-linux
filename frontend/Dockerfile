@@ -17,6 +17,7 @@ RUN npm install
 
 
 COPY . .
+<<<<<<< Updated upstream
 
 
 
@@ -33,4 +34,11 @@ COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
 
 EXPOSE 80
 
+=======
+RUN npm run build
+FROM nginx:alpine
+
+COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
+EXPOSE 80
+>>>>>>> Stashed changes
 CMD ["nginx", "-g", "daemon off;"]
