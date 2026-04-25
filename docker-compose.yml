@@ -18,6 +18,7 @@ services:
     networks:
       - app-network
 
+
   frontend:
     image: projetlinux12/frontend:latest
     container_name: angular_app
