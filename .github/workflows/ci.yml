@@ -1,0 +1,82 @@
+name: CI - Tests Backend et Frontend
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+
+  backend-tests:
+    name: Tests Laravel
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test_db
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, bcmath, pdo, pdo_mysql
+
+      - name: Installer les dépendances
+        working-directory: ./backend
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Copier .env
+        working-directory: ./backend
+        run: cp .env.example .env
+
+      - name: Configurer .env pour CI
+        working-directory: ./backend
+        run: |
+          sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=test_db/' .env
+          sed -i 's/DB_USERNAME=.*/DB_USERNAME=root/' .env
+          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=root/' .env
+
+      - name: Générer la clé app
+        working-directory: ./backend
+        run: php artisan key:generate
+
+      - name: Lancer les migrations
+        working-directory: ./backend
+        run: php artisan migrate --force
+
+      - name: Lancer les tests Laravel
+        working-directory: ./backend
+        run: php artisan test
+
+  frontend-tests:
+    name: Tests Angular
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Installer les dépendances
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Lancer les tests Angular
+        working-directory: ./frontend
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
