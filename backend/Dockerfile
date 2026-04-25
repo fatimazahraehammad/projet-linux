@@ -1,28 +1,24 @@
 FROM php:8.2-fpm
 
-# Installer dépendances système
 RUN apt-get update && apt-get install -y \
     git curl zip unzip nginx \
     libpng-dev libonig-dev libxml2-dev libzip-dev \
     && docker-php-ext-install pdo pdo_mysql mbstring zip \
     && apt-get clean
 
-# Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Dossier projet
 WORKDIR /var/www/html
 
-# Copier projet
 COPY . .
+COPY .env /var/www/html/.env
 
-# Installer dépendances Laravel
 RUN composer install --no-interaction --optimize-autoloader
 
-# Permissions Laravel
+RUN php artisan key:generate --force
+
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Config Nginx
 RUN printf '%s\n' \
 'server {' \
 '    listen 80;' \
@@ -42,13 +38,12 @@ RUN printf '%s\n' \
 '}' \
 > /etc/nginx/sites-available/default
 
-# Script de démarrage propre
 RUN printf '%s\n' \
 '#!/bin/sh' \
 'php-fpm -D' \
+'php artisan migrate --force' \
 'nginx -g "daemon off;"' \
 > /start.sh && chmod +x /start.sh
 
 EXPOSE 80
-
 CMD ["/start.sh"]
