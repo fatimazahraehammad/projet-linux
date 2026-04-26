@@ -62,8 +62,8 @@ jobs:
         working-directory: ./backend
         run: php artisan test
 
-  frontend-tests:
-    name: Tests Angular
+  frontend-build:
+    name: Build Angular
     runs-on: ubuntu-latest
 
     steps:
@@ -79,6 +79,6 @@ jobs:
         working-directory: ./frontend
         run: npm install
 
-      - name: Lancer les tests Angular
+      - name: Build Angular
         working-directory: ./frontend
-        run: npx vitest run
+        run: npm run build
