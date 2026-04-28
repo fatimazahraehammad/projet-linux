@@ -70,18 +70,15 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-docker-build:
+  docker-build:
     name: Build Images Docker
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Créer .env pour le build backend
         run: cp backend/.env.example backend/.env
-
       - name: Build image Backend
         run: docker build -t backend-laravel ./backend
-
       - name: Build image Frontend
         run: docker build -t frontend-angular ./frontend
