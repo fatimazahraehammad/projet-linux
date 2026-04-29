@@ -7,6 +7,12 @@ import { CommandeComponent } from './pages/commande/commande';
 import { AProposComponent } from './pages/a-propos/a-propos';
 import { ContactComponent } from './pages/contact/contact';
 
+import { LoginComponent } from './pages/login/login';
+import { DashboardComponent } from './pages/dashboard/dashboard';
+import { ProduitsAdminComponent } from './pages/produits/produits';
+import { CommandesAdminComponent } from './pages/commandes/commandes';
+import { ClientsAdminComponent } from './pages/clients/clients';
+
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'collections', component: CollectionsComponent },
@@ -15,5 +21,10 @@ export const routes: Routes = [
   { path: 'commande', component: CommandeComponent },
   { path: 'a-propos', component: AProposComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'admin/login', component: LoginComponent },
+  { path: 'admin/dashboard', component: DashboardComponent },
+  { path: 'admin/produits', component: ProduitsAdminComponent },
+  { path: 'admin/commandes', component: CommandesAdminComponent },
+  { path: 'admin/clients', component: ClientsAdminComponent },
   { path: '**', redirectTo: '' }
 ];
