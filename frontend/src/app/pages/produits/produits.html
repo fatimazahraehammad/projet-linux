@@ -1,0 +1,19 @@
+<div class="content">
+  <h2>Produits</h2>
+
+  <table>
+    <tr>
+      <th>Nom</th>
+      <th>Prix</th>
+      <th>Actions</th>
+    </tr>
+
+    <tr *ngFor="let p of produits">
+      <td>{{ p.nom }}</td>
+      <td>{{ p.prix }} DH</td>
+      <td>
+        <button (click)="deleteProduit(p.id)">Supprimer</button>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,30 @@
+.content {
+  margin-left: 200px;
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background: #1976d2;
+  color: white;
+}
+
+tr:hover {
+  background: #f5f5f5;
+}
