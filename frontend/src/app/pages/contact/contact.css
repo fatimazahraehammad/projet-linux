@@ -1,0 +1,183 @@
+/* NAVBAR */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #6B0F0F;
+  color: white;
+  padding: 0 40px;
+}
+
+.navbar-top {
+  padding: 16px 0;
+  border-bottom: 1px solid #8B1A1A;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-text {
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 6px;
+}
+
+.logo-star { color: #D4AF37; }
+
+.logo-sub {
+  font-size: 10px;
+  letter-spacing: 8px;
+  color: #f0c0c0;
+}
+
+.navbar-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 14px 0;
+}
+
+.navbar-bottom a {
+  color: white;
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.navbar-bottom a:hover,
+.navbar-bottom a.active { color: #D4AF37; }
+
+.nav-icons {
+  display: flex;
+  gap: 16px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+/* PAGE HEADER */
+.page-header {
+  text-align: center;
+  padding: 5rem 2rem 3rem;
+  background: #faf8f5;
+}
+
+.page-tag { color: #b8960c; letter-spacing: 0.2em; font-size: 0.8rem; margin-bottom: 1rem; }
+.page-header h1 { font-family: 'Georgia', serif; font-size: 3rem; color: #6B0F0F; }
+.header-line { width: 50px; height: 2px; background: #b8960c; margin: 1rem auto; }
+.page-sub { color: #999; letter-spacing: 0.1em; font-size: 0.85rem; }
+.about-tag { color: #b8960c; letter-spacing: 0.2em; font-size: 0.75rem; margin-bottom: 0.5rem; }
+
+/* CONTACT SECTION */
+.contact-section {
+  padding: 5rem 6rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 5rem;
+}
+
+.contact-info h2 {
+  font-family: 'Georgia', serif;
+  color: #6B0F0F;
+  font-size: 1.8rem;
+  margin: 0.5rem 0 1.5rem;
+}
+
+.contact-info > p {
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.info-item {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.info-icon { font-size: 1.2rem; color: #6B0F0F; margin-top: 2px; }
+.info-label { font-size: 0.7rem; letter-spacing: 0.15em; color: #b8960c; margin-bottom: 0.2rem; }
+.info-value { color: #333; font-size: 0.95rem; }
+
+.social-links { display: flex; gap: 1.5rem; margin-top: 2rem; }
+.social-links span {
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  color: #6B0F0F;
+  cursor: pointer;
+  border-bottom: 1px solid #6B0F0F;
+  padding-bottom: 2px;
+}
+
+/* FORMULAIRE */
+.contact-form h2 {
+  font-family: 'Georgia', serif;
+  color: #6B0F0F;
+  font-size: 1.8rem;
+  margin: 0.5rem 0 2rem;
+}
+
+.form-group { margin-bottom: 1.5rem; }
+
+.form-group label {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: #999;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid #ddd;
+  background: #faf8f5;
+  font-family: 'Georgia', serif;
+  color: #333;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: #6B0F0F; }
+.form-group textarea { resize: vertical; }
+.form-success { color: #b8960c; font-size: 0.9rem; margin-top: 1rem; letter-spacing: 0.05em; }
+
+/* BOUTONS */
+.btn-fill {
+  background: #6B0F0F;
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  letter-spacing: 0.15em;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-fill:hover { background: #8B1515; }
+.btn-fill:disabled { background: #b8960c; cursor: default; }
+
+/* FOOTER */
+.footer {
+  background: #4A0808;
+  color: white;
+  text-align: center;
+  padding: 40px;
+}
+.footer-logo { font-size: 24px; letter-spacing: 6px; color: #D4AF37; margin-bottom: 12px; }
+.footer-text { font-size: 11px; color: #f0c0c0; margin-bottom: 16px; }
+.footer-links { display: flex; justify-content: center; gap: 30px; font-size: 11px; letter-spacing: 2px; color: #f0c0c0; cursor: pointer; }
+.footer-links span:hover { color: #D4AF37; }

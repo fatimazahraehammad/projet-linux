@@ -1,1 +1,211 @@
-<p>produit works!</p>
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a routerLink="/">ACCUEIL</a>
+  <span>›</span>
+  <a routerLink="/collections">COLLECTIONS</a>
+  <span>›</span>
+  {{ produit?.nom | uppercase }}
+</div>
+
+<!-- PRODUIT PRINCIPAL -->
+<div class="product-main">
+
+  <!-- Galerie -->
+  <div class="gallery">
+    <div class="gallery-main">
+  <div class="gallery-badge" *ngIf="produit?.badge">{{ produit.badge }}</div>
+  <img [src]="produit?.image" [alt]="produit?.nom" style="width:100%; height:100%; object-fit:cover;" />
+</div>
+    
+  </div>
+
+  <!-- Infos -->
+  <div class="product-info">
+    <p class="product-tag">✦ {{ produit?.categorie }}</p>
+    <h1 class="product-title">{{ produit?.nom }}</h1>
+    <p class="product-mat">{{ produit?.mat }}</p>
+
+    <div class="stars">
+      <span class="stars-icons">★★★★★</span>
+      <span class="stars-count">(24 avis)</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="price-row">
+      <span class="price-main">{{ produit?.prix }} DH</span>
+      <span class="price-old" *ngIf="produit?.prixOld">{{ produit.prixOld }} DH</span>
+      <span class="price-badge" *ngIf="produit?.badge">{{ produit.badge }}</span>
+    </div>
+
+    <p class="product-desc">{{ produit?.desc }}</p>
+
+    <!-- Longueur -->
+    <p class="options-label">LONGUEUR</p>
+    <div class="options-row">
+      <div class="opt-chip" [class.active]="longueur==='40'" (click)="longueur='40'">40 cm</div>
+      <div class="opt-chip" [class.active]="longueur==='45'" (click)="longueur='45'">45 cm</div>
+      <div class="opt-chip" [class.active]="longueur==='50'" (click)="longueur='50'">50 cm</div>
+    </div>
+
+    <!-- Quantité -->
+    <p class="options-label">QUANTITÉ</p>
+    <div class="qty-row">
+      <button class="qty-btn" (click)="qty > 1 ? qty = qty - 1 : qty = 1">−</button>
+      <div class="qty-val">{{ qty }}</div>
+      <button class="qty-btn" (click)="qty = qty + 1">+</button>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-row">
+  <button class="btn-cart" (click)="addToCart()">AJOUTER AU PANIER</button>
+  <button class="btn-wish" (click)="wished = !wished">{{ wished ? '♥' : '♡' }}</button>
+</div>
+<div class="toast-success" *ngIf="ajouteAuPanier">
+  ✦ Produit ajouté au panier !
+</div>
+    <!-- Garanties -->
+    <div class="guarantees">
+      <div class="guar-item">
+        <span class="guar-icon">✦</span>
+        <span class="guar-text">OR & VERMEIL<br>CERTIFIÉ</span>
+      </div>
+      <div class="guar-item">
+        <span class="guar-icon">◎</span>
+        <span class="guar-text">LIVRAISON<br>OFFERTE</span>
+      </div>
+      <div class="guar-item">
+        <span class="guar-icon">◇</span>
+        <span class="guar-text">RETOUR<br>14 JOURS</span>
+      </div>
+      <div class="guar-item">
+        <span class="guar-icon">∞</span>
+        <span class="guar-text">EMBALLAGE<br>CADEAU</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACCORDÉON DÉTAILS -->
+<div class="details-section">
+  <div class="accordion">
+
+    <div class="accordion-item" [class.open]="openTab === 1">
+      <div class="accordion-header" (click)="openTab = openTab === 1 ? 0 : 1">
+        DESCRIPTION COMPLÈTE
+        <span class="accordion-arrow">+</span>
+      </div>
+      <div class="accordion-body">
+        Ce collier Saphir Doré est une création exclusive de la collection Printemps 2026.
+        Réalisé avec des pierres saphir sélectionnées à la main, ce bijou allie tradition
+        marocaine et raffinement contemporain. La chaîne en vermeil 18 carats offre une
+        brillance exceptionnelle qui résiste au temps.
+      </div>
+    </div>
+
+    <div class="accordion-item" [class.open]="openTab === 2">
+      <div class="accordion-header" (click)="openTab = openTab === 2 ? 0 : 2">
+        MATIÈRES & COMPOSITION
+        <span class="accordion-arrow">+</span>
+      </div>
+      <div class="accordion-body">
+        Or 18 carats · Vermeil · Pierres saphir naturelles · Fermoir en or blanc.
+        Hypoallergénique — sans nickel, sans plomb. Poids total : 8,5 g.
+      </div>
+    </div>
+
+    <div class="accordion-item" [class.open]="openTab === 3">
+      <div class="accordion-header" (click)="openTab = openTab === 3 ? 0 : 3">
+        LIVRAISON & RETOURS
+        <span class="accordion-arrow">+</span>
+      </div>
+      <div class="accordion-body">
+        Livraison gratuite dans tout le Maroc sous 2 à 5 jours ouvrables.
+        Emballage cadeau offert pour toute commande supérieure à 500 DH.
+        Retours acceptés sous 14 jours dans leur emballage d'origine.
+      </div>
+    </div>
+
+    <div class="accordion-item" [class.open]="openTab === 4">
+      <div class="accordion-header" (click)="openTab = openTab === 4 ? 0 : 4">
+        ENTRETIEN
+        <span class="accordion-arrow">+</span>
+      </div>
+      <div class="accordion-body">
+        Conserver dans la pochette fournie, à l'abri de l'humidité.
+        Nettoyer avec un chiffon doux et sec.
+        Éviter le contact avec les parfums, crèmes et produits chimiques.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PRODUITS ASSOCIÉS -->
+<section class="related-section">
+  <div class="section-header">
+    <h2>Vous aimerez aussi</h2>
+    <a routerLink="/collections">VOIR TOUT →</a>
+  </div>
+  <div class="products-grid">
+
+    <div class="product-card" [routerLink]="['/produit', 2]">
+      <div class="product-img">
+        <img src="images/bague-eternite.jpeg" alt="Bague Éternité" />
+        <span class="badge">NOUVEAU</span>
+      </div>
+      <div class="product-info-card">
+        <div class="product-name">Bague Éternité</div>
+        <div class="product-sub">ARGENT · ZIRCON</div>
+        <div class="product-bottom">
+          <span class="product-price">650 DH</span>
+          <span class="heart">♡</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" [routerLink]="['/produit', 3]">
+      <div class="product-img">
+        <img src="images/bracelet-torsade.jpeg" alt="Bracelet Torsadé" />
+        <span class="badge">-15%</span>
+      </div>
+      <div class="product-info-card">
+        <div class="product-name">Bracelet Torsadé</div>
+        <div class="product-sub">OR ROSE · 14K</div>
+        <div class="product-bottom">
+          <span class="product-price">520 DH</span>
+          <span class="heart">♡</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" [routerLink]="['/produit', 4]">
+      <div class="product-img">
+        <img src="images/boucles-soleil.jpeg" alt="Boucles Soleil" />
+      </div>
+      <div class="product-info-card">
+        <div class="product-name">Boucles Soleil</div>
+        <div class="product-sub">OR 18K · VERMEIL</div>
+        <div class="product-bottom">
+          <span class="product-price">730 DH</span>
+          <span class="heart">♡</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" [routerLink]="['/produit', 5]">
+      <div class="product-img">
+        <img src="images/collier-lune.jpeg" alt="Collier Lune" />
+      </div>
+      <div class="product-info-card">
+        <div class="product-name">Collier Lune</div>
+        <div class="product-sub">ARGENT · NACRE</div>
+        <div class="product-bottom">
+          <span class="product-price">480 DH</span>
+          <span class="heart">♡</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

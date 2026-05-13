@@ -2,13 +2,9 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'app-a-propos',
-  standalone: true,
+  selector: 'app-commande',
   imports: [RouterLink, RouterLinkActive],
-  templateUrl: './a-propos.html',
-  styleUrl: './a-propos.css'
+  templateUrl: './commande.html',
+  styleUrl: './commande.css',
 })
-export class AProposComponent {}
-
-
-
+export class CommandeComponent {}

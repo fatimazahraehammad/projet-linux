@@ -1,1 +1,102 @@
-<p>collections works!</p>
+<!-- HEADER PAGE -->
+<div class="page-header">
+  <p class="page-tag">✦ NOS CRÉATIONS</p>
+  <h1>Collections</h1>
+  <div class="header-line"></div>
+  <p class="page-sub">Pièces artisanales • Or & Vermeil • Maroc</p>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-top">
+    <div class="logo">
+      <span class="logo-text">S<span class="logo-star">✦</span>AYIF</span>
+      <span class="logo-sub">COLLECTION</span>
+    </div>
+  </div>
+  <div class="navbar-bottom">
+    <a routerLink="/" routerLinkActive="active">ACCUEIL</a>
+    <a routerLink="/collections" routerLinkActive="active">COLLECTIONS</a>
+    <a routerLink="/a-propos" routerLinkActive="active">À PROPOS</a>
+    <a routerLink="/contact" routerLinkActive="active">CONTACT</a>
+    <div class="nav-icons">
+      <span>⌕</span>
+      <span>♡</span>
+      <span routerLink="/panier" style="cursor:pointer">▤</span>
+    </div>
+  </div>
+</nav>
+
+<!-- FILTRES -->
+<div class="filtres-bar">
+  <div class="filtres-left">
+    <button
+      *ngFor="let f of filtres"
+      class="filtre-btn"
+      [class.active]="filtreActif === f"
+      (click)="filtreActif = f">
+      {{ f }}
+    </button>
+  </div>
+  <div class="filtres-right">
+    <span class="tri-label">TRIER PAR</span>
+    <select class="tri-select" [(ngModel)]="triActif">
+      <option value="nouveautes">Nouveautés</option>
+      <option value="prix-asc">Prix croissant</option>
+      <option value="prix-desc">Prix décroissant</option>
+    </select>
+  </div>
+</div>
+
+<!-- COMPTEUR -->
+<div class="compteur">
+  {{ produitsFiltres.length }} pièce{{ produitsFiltres.length > 1 ? 's' : '' }}
+</div>
+
+<!-- GRILLE PRODUITS -->
+<section class="products-section">
+  <div class="products-grid">
+    <div
+      class="product-card"
+      *ngFor="let p of produitsFiltres; let i = index"
+      [routerLink]="['/produit', p.id]">
+
+      <div class="product-img">
+  <img [src]="p.image" [alt]="p.nom" />
+  <span class="badge" *ngIf="p.badge">{{ p.badge }}</span>
+  <button class="wish-btn" (click)="$event.stopPropagation(); toggleWish(i)">
+    {{ wished[i] ? '♥' : '♡' }}
+  </button>
+</div>
+
+      <div class="product-info">
+        <div class="product-name">{{ p.nom }}</div>
+        <div class="product-mat">{{ p.mat }}</div>
+        <div class="product-bottom">
+          <span class="product-price">{{ p.prix }} DH</span>
+          <span class="product-arrow">→</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BANNER -->
+<div class="banner">
+  <div>
+    <h3>Commande dès 500 DH</h3>
+    <p>Emballage cadeau offert pour tout achat supérieur à 500 DH</p>
+  </div>
+  <button class="btn-outline" routerLink="/commande">COMMANDER</button>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">SAYIF</div>
+  <div class="footer-text">© 2026 SAYIF COLLECTION · MAROC</div>
+  <div class="footer-links">
+    <span>INSTAGRAM</span>
+    <span>FACEBOOK</span>
+  </div>
+</footer>
