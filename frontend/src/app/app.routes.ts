@@ -12,8 +12,8 @@ export const routes: Routes = [
   { path: 'collections', component: CollectionsComponent },
   { path: 'produit/:id', component: ProduitComponent },
   { path: 'panier', component: PanierComponent },
-  { path: 'commande', component: CommandeComponent },
-  { path: 'a-propos', component: AProposComponent },
-  { path: 'contact', component: ContactComponent },
+  { path: 'a-propos',  component: AProposComponent },
+  { path: 'contact',   component: ContactComponent },
+  { path: 'commande',  component: CommandeComponent },
   { path: '**', redirectTo: '' }
 ];

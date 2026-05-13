@@ -1,1 +1,162 @@
-<p>commande works!</p>
+<!-- NAVBAR EN PREMIER -->
+<nav class="navbar">
+  <div class="navbar-top">
+    <div class="logo">
+      <span class="logo-text">S<span class="logo-star">✦</span>AYIF</span>
+      <span class="logo-sub">COLLECTION</span>
+    </div>
+  </div>
+  <div class="navbar-bottom">
+    <a routerLink="/" routerLinkActive="active">ACCUEIL</a>
+    <a routerLink="/collections" routerLinkActive="active">COLLECTIONS</a>
+    <a routerLink="/a-propos" routerLinkActive="active">À PROPOS</a>
+    <a routerLink="/contact" routerLinkActive="active">CONTACT</a>
+    <div class="nav-icons">
+      <span>⌕</span>
+      <span>♡</span>
+      <span routerLink="/panier" style="cursor:pointer">▤</span>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <p class="page-tag">✦ PASSER COMMANDE</p>
+  <h1>Commande</h1>
+  <div class="header-line"></div>
+  <p class="page-sub">Livraison partout au Maroc</p>
+</div>
+
+<section class="commande-section">
+  <div class="commande-grid">
+
+    <!-- FORMULAIRE COMMANDE -->
+    <div class="commande-form">
+      <p class="about-tag">✦ VOS INFORMATIONS</p>
+      <h2>Coordonnées</h2>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>PRÉNOM</label>
+          <input type="text" placeholder="Prénom" [(ngModel)]="commande.prenom" />
+        </div>
+        <div class="form-group">
+          <label>NOM</label>
+          <input type="text" placeholder="Nom" [(ngModel)]="commande.nom" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>EMAIL</label>
+        <input type="email" placeholder="votre@email.com" [(ngModel)]="commande.email" />
+      </div>
+
+      <div class="form-group">
+        <label>TÉLÉPHONE</label>
+        <input type="tel" placeholder="+212 6 00 00 00 00" [(ngModel)]="commande.telephone" />
+      </div>
+
+      <div class="form-group">
+        <label>ADRESSE DE LIVRAISON</label>
+        <input type="text" placeholder="Numéro et nom de rue" [(ngModel)]="commande.adresse" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>VILLE</label>
+          <input type="text" placeholder="Tetouan" [(ngModel)]="commande.ville" />
+        </div>
+        <div class="form-group">
+          <label>CODE POSTAL</label>
+          <input type="text" placeholder="20000" [(ngModel)]="commande.codePostal" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>PRODUIT SOUHAITÉ</label>
+        <input type="text" placeholder="Ex : Collier Saphir Doré" [(ngModel)]="commande.produit" />
+      </div>
+
+      <div class="form-group">
+        <label>NOTES (optionnel)</label>
+        <textarea placeholder="Instructions spéciales, personnalisation..." [(ngModel)]="commande.notes" rows="3"></textarea>
+      </div>
+
+      <p class="about-tag" style="margin-top: 2rem;">✦ MODE DE PAIEMENT</p>
+      <h2>Paiement</h2>
+
+      <div class="payment-options">
+        <label class="payment-option" [class.selected]="commande.paiement === 'virement'">
+          <input type="radio" [(ngModel)]="commande.paiement" value="virement" />
+          <div class="payment-icon">◈</div>
+          <div>
+            <div class="payment-title">Virement bancaire</div>
+            <div class="payment-sub">Paiement sécurisé par virement</div>
+          </div>
+        </label>
+
+        <label class="payment-option" [class.selected]="commande.paiement === 'livraison'">
+          <input type="radio" [(ngModel)]="commande.paiement" value="livraison" />
+          <div class="payment-icon">◇</div>
+          <div>
+            <div class="payment-title">Paiement à la livraison</div>
+            <div class="payment-sub">Payez en cash à réception</div>
+          </div>
+        </label>
+      </div>
+
+      <button class="btn-fill btn-full" (click)="passerCommande()" [disabled]="commandePassee">
+        {{ commandePassee ? 'COMMANDE CONFIRMÉE ✓' : 'CONFIRMER LA COMMANDE' }}
+      </button>
+
+      <p class="form-success" *ngIf="commandePassee">
+        ✦ Merci pour votre commande ! Notre équipe vous contactera sous 24h.
+      </p>
+    </div>
+
+    <!-- RÉCAPITULATIF -->
+    <div class="commande-recap">
+      <p class="about-tag">✦ RÉCAPITULATIF</p>
+      <h2>Votre commande</h2>
+
+      <div class="recap-product">
+        <div class="recap-img img-beige"></div>
+        <div class="recap-details">
+          <div class="recap-name">{{ commande.produit || 'Produit non sélectionné' }}</div>
+          <div class="recap-mat">SAYIF Collection</div>
+        </div>
+      </div>
+
+      <div class="recap-line">
+        <span>Sous-total</span>
+        <span>— DH</span>
+      </div>
+      <div class="recap-line">
+        <span>Livraison</span>
+        <span>Gratuite dès 500 DH</span>
+      </div>
+      <div class="recap-line recap-total">
+        <span>TOTAL</span>
+        <span>— DH</span>
+      </div>
+
+      <div class="recap-garanties">
+        <div class="garantie">✦ Livraison sécurisée</div>
+        <div class="garantie">✦ Emballage cadeau offert</div>
+        <div class="garantie">✦ Retour sous 14 jours</div>
+        <div class="garantie">✦ Paiement 100% sécurisé</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">SAYIF</div>
+  <div class="footer-text">© 2026 SAYIF COLLECTION · MAROC</div>
+  <div class="footer-links">
+    <span>INSTAGRAM</span>
+    <span>FACEBOOK</span>
+  </div>
+</footer>

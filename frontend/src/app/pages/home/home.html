@@ -14,7 +14,7 @@
     <div class="nav-icons">
       <span>⌕</span>
       <span>♡</span>
-      <span>▤</span>
+      <span routerLink="/panier" style="cursor:pointer">▤</span>
     </div>
   </div>
 </nav>
@@ -26,9 +26,8 @@
   <div class="hero-line"></div>
   <p class="hero-sub">Pièces artisanales • Or & Vermeil • Maroc</p>
   <div class="hero-buttons">
-    <button class="btn-outline">DÉCOUVRIR</button>
-    <button class="btn-fill" routerLink="/collections">BOUTIQUE</button>
-  </div>
+  <button class="btn-fill" routerLink="/collections">BOUTIQUE</button>
+</div>
 </section>
 
 <!-- STRIP -->
@@ -41,26 +40,26 @@
 
 <!-- CATEGORIES -->
 <div class="categories">
-  <div class="cat-item" routerLink="/collections">
-    <div class="cat-icon">◎</div>
-    <div class="cat-name">COLLIERS</div>
-    <div class="cat-count">24 pièces</div>
-  </div>
-  <div class="cat-item" routerLink="/collections">
-    <div class="cat-icon">◇</div>
-    <div class="cat-name">BAGUES</div>
-    <div class="cat-count">18 pièces</div>
-  </div>
-  <div class="cat-item" routerLink="/collections">
-    <div class="cat-icon">∞</div>
-    <div class="cat-name">BRACELETS</div>
-    <div class="cat-count">15 pièces</div>
-  </div>
-  <div class="cat-item" routerLink="/collections">
-    <div class="cat-icon">✧</div>
-    <div class="cat-name">BOUCLES</div>
-    <div class="cat-count">20 pièces</div>
-  </div>
+  <div class="cat-item" [routerLink]="['/collections']" [queryParams]="{categorie: 'COLLIERS'}">
+  <div class="cat-icon">◎</div>
+  <div class="cat-name">COLLIERS</div>
+  <div class="cat-count">3 pièces</div>
+</div>
+<div class="cat-item" [routerLink]="['/collections']" [queryParams]="{categorie: 'BAGUES'}">
+  <div class="cat-icon">◇</div>
+  <div class="cat-name">BAGUES</div>
+  <div class="cat-count">2 pièces</div>
+</div>
+<div class="cat-item" [routerLink]="['/collections']" [queryParams]="{categorie: 'BRACELETS'}">
+  <div class="cat-icon">∞</div>
+  <div class="cat-name">BRACELETS</div>
+  <div class="cat-count">2 pièces</div>
+</div>
+<div class="cat-item" [routerLink]="['/collections']" [queryParams]="{categorie: 'BOUCLES'}">
+  <div class="cat-icon">✧</div>
+  <div class="cat-name">BOUCLES</div>
+  <div class="cat-count">2 pièces</div>
+</div>
 </div>
 
 <!-- PRODUITS -->
@@ -70,43 +69,51 @@
     <a routerLink="/collections">VOIR TOUT →</a>
   </div>
   <div class="products-grid">
-    <div class="product-card">
-      <div class="product-img img-beige">
-        <span class="badge">NOUVEAU</span>
-      </div>
-      <div class="product-info">
-        <div class="product-name">Collier Saphir Doré</div>
-        <div class="product-mat">OR 18K · VERMEIL</div>
-        <div class="product-bottom">
-          <span class="product-price">890 DH</span>
-          <span class="heart">♡</span>
-        </div>
-      </div>
+
+    <div class="product-card" [routerLink]="['/produit', 1]">
+  <div class="product-img">
+  <img src="images/collier-saphir.jpeg" alt="Collier Saphir Doré" />
+    <span class="badge">NOUVEAU</span>
+  </div>
+  <div class="product-info">
+    <div class="product-name">Collier Saphir Doré</div>
+    <div class="product-mat">OR 18K · VERMEIL</div>
+    <div class="product-bottom">
+      <span class="product-price">890 DH</span>
+      <span class="heart">♡</span>
     </div>
-    <div class="product-card">
-      <div class="product-img img-rose"></div>
-      <div class="product-info">
-        <div class="product-name">Bague Éternité</div>
-        <div class="product-mat">ARGENT · ZIRCON</div>
-        <div class="product-bottom">
-          <span class="product-price">650 DH</span>
-          <span class="heart">♡</span>
-        </div>
-      </div>
+  </div>
+</div>
+
+   <div class="product-card" [routerLink]="['/produit', 2]">
+  <div class="product-img">
+    <img src="images/bague-eternite.jpeg" alt="Bague Éternité" />
+  </div>
+  <div class="product-info">
+    <div class="product-name">Bague Éternité</div>
+    <div class="product-mat">ARGENT · ZIRCON</div>
+    <div class="product-bottom">
+      <span class="product-price">650 DH</span>
+      <span class="heart">♡</span>
     </div>
-    <div class="product-card">
-      <div class="product-img img-vert">
-        <span class="badge">-15%</span>
-      </div>
-      <div class="product-info">
-        <div class="product-name">Bracelet Torsadé</div>
-        <div class="product-mat">OR ROSE · 14K</div>
-        <div class="product-bottom">
-          <span class="product-price">520 DH</span>
-          <span class="heart">♡</span>
-        </div>
-      </div>
+  </div>
+</div>
+
+    <div class="product-card" [routerLink]="['/produit', 3]">
+  <div class="product-img">
+   <img src="images/bracelet-torsade.jpeg" alt="Bracelet Torsadé" />
+    <span class="badge">-15%</span>
+  </div>
+  <div class="product-info">
+    <div class="product-name">Bracelet Torsadé</div>
+    <div class="product-mat">OR ROSE · 14K</div>
+    <div class="product-bottom">
+      <span class="product-price">520 DH</span>
+      <span class="heart">♡</span>
     </div>
+  </div>
+</div>
+
   </div>
 </section>
 
@@ -116,7 +123,7 @@
     <h3>Commande dès 500 DH</h3>
     <p>Emballage cadeau offert pour tout achat supérieur à 500 DH</p>
   </div>
-  <button class="btn-outline">COMMANDER</button>
+  <button class="btn-outline" routerLink="/commande">COMMANDER</button>
 </div>
 
 <!-- FOOTER -->

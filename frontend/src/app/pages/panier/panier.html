@@ -1,1 +1,74 @@
-<p>panier works!</p>
+<nav class="navbar">
+  <div class="navbar-top">
+    <div class="logo">
+      <span class="logo-text">S<span class="logo-star">✦</span>AYIF</span>
+      <span class="logo-sub">COLLECTION</span>
+    </div>
+  </div>
+  <div class="navbar-bottom">
+    <a routerLink="/" routerLinkActive="active">ACCUEIL</a>
+    <a routerLink="/collections" routerLinkActive="active">COLLECTIONS</a>
+    <a routerLink="/a-propos" routerLinkActive="active">À PROPOS</a>
+    <a routerLink="/contact" routerLinkActive="active">CONTACT</a>
+    <div class="nav-icons">
+      <span>⌕</span>
+      <span>♡</span>
+      <span routerLink="/panier" style="cursor:pointer">▤</span>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <p class="page-tag">✦ MON PANIER</p>
+  <h1>Panier</h1>
+  <div class="header-line"></div>
+</div>
+
+<section class="panier-section">
+
+  <div *ngIf="panier.count() === 0" class="panier-vide">
+    <p>Votre panier est vide</p>
+    <button class="btn-fill" routerLink="/collections">VOIR LES COLLECTIONS</button>
+  </div>
+
+  <div *ngIf="panier.count() > 0" class="panier-grid">
+    <div class="panier-items">
+      <div class="panier-item" *ngFor="let item of panier.items()">
+        <img [src]="item.image" [alt]="item.nom" class="panier-img" />
+        <div class="panier-info">
+          <div class="panier-nom">{{ item.nom }}</div>
+          <div class="panier-mat">{{ item.mat }}</div>
+          <div class="panier-prix">{{ item.prix }} DH</div>
+        </div>
+        <div class="panier-qty">Qté : {{ item.qty }}</div>
+        <button class="panier-del" (click)="panier.supprimer(item.id)">✕</button>
+      </div>
+    </div>
+
+    <div class="panier-recap">
+      <h2>Récapitulatif</h2>
+      <div class="recap-line">
+        <span>Sous-total</span>
+        <span>{{ panier.total() }} DH</span>
+      </div>
+      <div class="recap-line">
+        <span>Livraison</span>
+        <span>Gratuite</span>
+      </div>
+      <div class="recap-line recap-total">
+        <span>TOTAL</span>
+        <span>{{ panier.total() }} DH</span>
+      </div>
+      <button class="btn-fill btn-full" routerLink="/commande">COMMANDER</button>
+    </div>
+  </div>
+
+</section>
+
+<footer class="footer">
+  <div class="footer-logo">SAYIF</div>
+  <div class="footer-text">© 2026 SAYIF COLLECTION · MAROC</div>
+  <div class="footer-links">
+    <span>INSTAGRAM</span><span>FACEBOOK</span>
+  </div>
+</footer>
