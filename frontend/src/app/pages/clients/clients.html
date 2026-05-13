@@ -1,0 +1,15 @@
+<div class="content">
+  <h2>Clients</h2>
+
+  <table>
+    <tr>
+      <th>Nom</th>
+      <th>Email</th>
+    </tr>
+
+    <tr *ngFor="let c of clients">
+      <td>{{ c.name }}</td>
+      <td>{{ c.email }}</td>
+    </tr>
+  </table>
+</div>
