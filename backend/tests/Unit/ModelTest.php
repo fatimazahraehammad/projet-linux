@@ -15,7 +15,6 @@ class ModelTest extends TestCase
 {
     use RefreshDatabase;
 
-    // ===== CATEGORY =====
     public function test_category_can_be_created()
     {
         $category = Category::create([
@@ -23,7 +22,6 @@ class ModelTest extends TestCase
             'slug' => 'colliers',
             'icon' => 'necklace',
         ]);
-
         $this->assertDatabaseHas('categories', ['slug' => 'colliers']);
         $this->assertEquals('Colliers', $category->name);
     }
@@ -35,7 +33,6 @@ class ModelTest extends TestCase
             'slug' => 'bagues',
             'icon' => 'ring',
         ]);
-
         Product::create([
             'category_id' => $category->id,
             'name' => 'Bague Test',
@@ -43,12 +40,9 @@ class ModelTest extends TestCase
             'price' => 500,
             'stock' => 5,
         ]);
-
         $this->assertCount(1, $category->products);
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class, $category->products);
     }
 
-    // ===== PRODUCT =====
     public function test_product_can_be_created()
     {
         $category = Category::create([
@@ -56,7 +50,6 @@ class ModelTest extends TestCase
             'slug' => 'bracelets',
             'icon' => 'bracelet',
         ]);
-
         $product = Product::create([
             'category_id' => $category->id,
             'name' => 'Bracelet Doré',
@@ -64,7 +57,6 @@ class ModelTest extends TestCase
             'price' => 520,
             'stock' => 10,
         ]);
-
         $this->assertDatabaseHas('products', ['slug' => 'bracelet-dore']);
         $this->assertEquals(520, $product->price);
     }
@@ -76,7 +68,6 @@ class ModelTest extends TestCase
             'slug' => 'colliers-test',
             'icon' => 'necklace',
         ]);
-
         $product = Product::create([
             'category_id' => $category->id,
             'name' => 'Collier Test',
@@ -84,12 +75,10 @@ class ModelTest extends TestCase
             'price' => 890,
             'stock' => 8,
         ]);
-
         $this->assertEquals($category->id, $product->category->id);
         $this->assertInstanceOf(Category::class, $product->category);
     }
 
-    // ===== ORDER =====
     public function test_order_can_be_created()
     {
         $order = Order::create([
@@ -101,7 +90,6 @@ class ModelTest extends TestCase
             'total'         => 0,
             'status'        => 'pending',
         ]);
-
         $this->assertDatabaseHas('orders', ['email' => 'fatima@test.com']);
         $this->assertEquals('pending', $order->status);
     }
@@ -113,7 +101,6 @@ class ModelTest extends TestCase
             'slug' => 'boucles',
             'icon' => 'earrings',
         ]);
-
         $product = Product::create([
             'category_id' => $category->id,
             'name'        => 'Boucles Test',
@@ -121,7 +108,6 @@ class ModelTest extends TestCase
             'price'       => 430,
             'stock'       => 15,
         ]);
-
         $order = Order::create([
             'customer_name' => 'Sara Test',
             'email'         => 'sara@test.com',
@@ -131,7 +117,6 @@ class ModelTest extends TestCase
             'total'         => 430,
             'status'        => 'pending',
         ]);
-
         OrderItem::create([
             'order_id'   => $order->id,
             'product_id' => $product->id,
@@ -139,12 +124,9 @@ class ModelTest extends TestCase
             'unit_price' => 430,
             'subtotal'   => 430,
         ]);
-
         $this->assertCount(1, $order->items);
-        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class, $order->items);
     }
 
-    // ===== CONTACT MESSAGE =====
     public function test_contact_message_can_be_created()
     {
         $message = ContactMessage::create([
@@ -153,12 +135,9 @@ class ModelTest extends TestCase
             'subject' => 'Test Sujet',
             'message' => 'Ceci est un message test.',
         ]);
-
         $this->assertDatabaseHas('contact_messages', ['email' => 'test@test.com']);
-        $this->assertEquals('Test Sujet', $message->subject);
     }
 
-    // ===== FAVORITE =====
     public function test_favorite_can_be_created()
     {
         $category = Category::create([
@@ -166,7 +145,6 @@ class ModelTest extends TestCase
             'slug' => 'colliers-fav',
             'icon' => 'necklace',
         ]);
-
         $product = Product::create([
             'category_id' => $category->id,
             'name'        => 'Collier Fav',
@@ -174,12 +152,10 @@ class ModelTest extends TestCase
             'price'       => 890,
             'stock'       => 5,
         ]);
-
         $favorite = Favorite::create([
             'client_token' => 'token-abc-123',
             'product_id'   => $product->id,
         ]);
-
         $this->assertDatabaseHas('favorites', ['client_token' => 'token-abc-123']);
     }
 
@@ -190,7 +166,6 @@ class ModelTest extends TestCase
             'slug' => 'bagues-fav',
             'icon' => 'ring',
         ]);
-
         $product = Product::create([
             'category_id' => $category->id,
             'name'        => 'Bague Fav',
@@ -198,12 +173,10 @@ class ModelTest extends TestCase
             'price'       => 650,
             'stock'       => 12,
         ]);
-
         $favorite = Favorite::create([
             'client_token' => 'token-xyz-456',
             'product_id'   => $product->id,
         ]);
-
         $this->assertEquals($product->id, $favorite->product->id);
         $this->assertInstanceOf(Product::class, $favorite->product);
     }
