@@ -155,18 +155,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      - name: Installer AWS CLI
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
 
       - name: Récupérer IP du serveur
         id: get_ip
-        working-directory: ./terraform
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          terraform init
-          echo "SERVER_IP=$(terraform output -raw server_ip)" >> $GITHUB_OUTPUT
+          sleep 30
+          IP=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=projet-linux-server" \
+                      "Name=instance-state-name,Values=running" \
+            --query "Reservations[0].Instances[0].PublicIpAddress" \
+            --output text)
+          echo "SERVER_IP=$IP" >> $GITHUB_OUTPUT
+          echo "IP trouvée: $IP"
 
       - name: Configurer SSH
         run: |
