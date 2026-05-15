@@ -3,13 +3,13 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ContactMessage;
 use App\Models\Favorite;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ModelTest extends TestCase
 {
@@ -25,6 +25,7 @@ class ModelTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('categories', ['slug' => 'colliers']);
+        $this->assertEquals('Colliers', $category->name);
     }
 
     public function test_category_has_many_products()
@@ -35,7 +36,7 @@ class ModelTest extends TestCase
             'icon' => 'ring',
         ]);
 
-        $product = Product::create([
+        Product::create([
             'category_id' => $category->id,
             'name' => 'Bague Test',
             'slug' => 'bague-test',
@@ -43,8 +44,8 @@ class ModelTest extends TestCase
             'stock' => 5,
         ]);
 
-        $category->refresh();
-        $this->assertTrue($category->products->contains($product));
+        $this->assertCount(1, $category->products);
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class, $category->products);
     }
 
     // ===== PRODUCT =====
@@ -58,13 +59,14 @@ class ModelTest extends TestCase
 
         $product = Product::create([
             'category_id' => $category->id,
-            'name' => 'Bracelet Test',
-            'slug' => 'bracelet-test',
-            'price' => 300,
+            'name' => 'Bracelet Doré',
+            'slug' => 'bracelet-dore',
+            'price' => 520,
             'stock' => 10,
         ]);
 
-        $this->assertDatabaseHas('products', ['slug' => 'bracelet-test']);
+        $this->assertDatabaseHas('products', ['slug' => 'bracelet-dore']);
+        $this->assertEquals(520, $product->price);
     }
 
     public function test_product_belongs_to_category()
@@ -79,11 +81,12 @@ class ModelTest extends TestCase
             'category_id' => $category->id,
             'name' => 'Collier Test',
             'slug' => 'collier-test',
-            'price' => 800,
-            'stock' => 3,
+            'price' => 890,
+            'stock' => 8,
         ]);
 
         $this->assertEquals($category->id, $product->category->id);
+        $this->assertInstanceOf(Category::class, $product->category);
     }
 
     // ===== ORDER =====
@@ -94,12 +97,13 @@ class ModelTest extends TestCase
             'email'         => 'fatima@test.com',
             'phone'         => '0600000000',
             'city'          => 'Casablanca',
-            'address'       => '123 Rue Test',
-            'total'         => 1500,
+            'address'       => '12 Rue Test',
+            'total'         => 0,
             'status'        => 'pending',
         ]);
 
         $this->assertDatabaseHas('orders', ['email' => 'fatima@test.com']);
+        $this->assertEquals('pending', $order->status);
     }
 
     public function test_order_has_many_items()
@@ -112,32 +116,32 @@ class ModelTest extends TestCase
 
         $product = Product::create([
             'category_id' => $category->id,
-            'name'        => 'Boucle Test',
-            'slug'        => 'boucle-test',
-            'price'       => 400,
-            'stock'       => 5,
+            'name'        => 'Boucles Test',
+            'slug'        => 'boucles-test',
+            'price'       => 430,
+            'stock'       => 15,
         ]);
 
         $order = Order::create([
-            'customer_name' => 'Test Client',
-            'email'         => 'client@test.com',
-            'phone'         => '0600000001',
+            'customer_name' => 'Sara Test',
+            'email'         => 'sara@test.com',
+            'phone'         => '0611111111',
             'city'          => 'Rabat',
-            'address'       => '456 Rue Test',
-            'total'         => 400,
+            'address'       => '5 Avenue Test',
+            'total'         => 430,
             'status'        => 'pending',
         ]);
 
-        $item = OrderItem::create([
+        OrderItem::create([
             'order_id'   => $order->id,
             'product_id' => $product->id,
             'quantity'   => 1,
-            'unit_price' => 400,
-            'subtotal'   => 400,
+            'unit_price' => 430,
+            'subtotal'   => 430,
         ]);
 
-        $order->refresh();
-        $this->assertTrue($order->items->contains($item));
+        $this->assertCount(1, $order->items);
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class, $order->items);
     }
 
     // ===== CONTACT MESSAGE =====
@@ -151,6 +155,7 @@ class ModelTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('contact_messages', ['email' => 'test@test.com']);
+        $this->assertEquals('Test Sujet', $message->subject);
     }
 
     // ===== FAVORITE =====
@@ -164,18 +169,18 @@ class ModelTest extends TestCase
 
         $product = Product::create([
             'category_id' => $category->id,
-            'name'        => 'Collier Favori',
-            'slug'        => 'collier-favori',
-            'price'       => 700,
-            'stock'       => 4,
+            'name'        => 'Collier Fav',
+            'slug'        => 'collier-fav',
+            'price'       => 890,
+            'stock'       => 5,
         ]);
 
         $favorite = Favorite::create([
-            'client_token' => 'token-test-123',
+            'client_token' => 'token-abc-123',
             'product_id'   => $product->id,
         ]);
 
-        $this->assertDatabaseHas('favorites', ['client_token' => 'token-test-123']);
+        $this->assertDatabaseHas('favorites', ['client_token' => 'token-abc-123']);
     }
 
     public function test_favorite_belongs_to_product()
@@ -188,17 +193,18 @@ class ModelTest extends TestCase
 
         $product = Product::create([
             'category_id' => $category->id,
-            'name'        => 'Bague Favorite',
-            'slug'        => 'bague-favorite',
-            'price'       => 600,
-            'stock'       => 6,
+            'name'        => 'Bague Fav',
+            'slug'        => 'bague-fav',
+            'price'       => 650,
+            'stock'       => 12,
         ]);
 
         $favorite = Favorite::create([
-            'client_token' => 'token-test-456',
+            'client_token' => 'token-xyz-456',
             'product_id'   => $product->id,
         ]);
 
         $this->assertEquals($product->id, $favorite->product->id);
+        $this->assertInstanceOf(Product::class, $favorite->product);
     }
 }
