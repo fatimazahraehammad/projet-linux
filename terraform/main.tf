@@ -78,4 +78,8 @@ resource "aws_instance" "projet_server" {
   tags = {
     Name = "projet-linux-server"
   }
+
+  lifecycle {
+    ignore_changes = [ami, user_data]
+  }
 }
