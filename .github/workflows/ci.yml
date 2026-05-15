@@ -173,6 +173,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/projet-linux-key
           chmod 600 ~/.ssh/projet-linux-key
+          sleep 30
           ssh-keyscan -H ${{ steps.get_ip.outputs.SERVER_IP }} >> ~/.ssh/known_hosts
 
       - name: Copier docker-compose.yml
