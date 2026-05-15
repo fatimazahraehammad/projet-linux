@@ -10,7 +10,6 @@ use App\Models\OrderItem;
 use App\Models\ContactMessage;
 use App\Models\Favorite;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Str;
 
 class ModelTest extends TestCase
 {
@@ -44,6 +43,7 @@ class ModelTest extends TestCase
             'stock' => 5,
         ]);
 
+        $category->refresh();
         $this->assertTrue($category->products->contains($product));
     }
 
@@ -91,12 +91,12 @@ class ModelTest extends TestCase
     {
         $order = Order::create([
             'customer_name' => 'Fatima Test',
-            'email' => 'fatima@test.com',
-            'phone' => '0600000000',
-            'city' => 'Casablanca',
-            'address' => '123 Rue Test',
-            'total' => 1500,
-            'status' => 'pending',
+            'email'         => 'fatima@test.com',
+            'phone'         => '0600000000',
+            'city'          => 'Casablanca',
+            'address'       => '123 Rue Test',
+            'total'         => 1500,
+            'status'        => 'pending',
         ]);
 
         $this->assertDatabaseHas('orders', ['email' => 'fatima@test.com']);
@@ -112,30 +112,31 @@ class ModelTest extends TestCase
 
         $product = Product::create([
             'category_id' => $category->id,
-            'name' => 'Boucle Test',
-            'slug' => 'boucle-test',
-            'price' => 400,
-            'stock' => 5,
+            'name'        => 'Boucle Test',
+            'slug'        => 'boucle-test',
+            'price'       => 400,
+            'stock'       => 5,
         ]);
 
         $order = Order::create([
             'customer_name' => 'Test Client',
-            'email' => 'client@test.com',
-            'phone' => '0600000001',
-            'city' => 'Rabat',
-            'address' => '456 Rue Test',
-            'total' => 400,
-            'status' => 'pending',
+            'email'         => 'client@test.com',
+            'phone'         => '0600000001',
+            'city'          => 'Rabat',
+            'address'       => '456 Rue Test',
+            'total'         => 400,
+            'status'        => 'pending',
         ]);
 
         $item = OrderItem::create([
-            'order_id' => $order->id,
+            'order_id'   => $order->id,
             'product_id' => $product->id,
-            'quantity' => 1,
+            'quantity'   => 1,
             'unit_price' => 400,
-            'subtotal' => 400,
+            'subtotal'   => 400,
         ]);
 
+        $order->refresh();
         $this->assertTrue($order->items->contains($item));
     }
 
@@ -143,8 +144,8 @@ class ModelTest extends TestCase
     public function test_contact_message_can_be_created()
     {
         $message = ContactMessage::create([
-            'name' => 'Test User',
-            'email' => 'test@test.com',
+            'name'    => 'Test User',
+            'email'   => 'test@test.com',
             'subject' => 'Test Sujet',
             'message' => 'Ceci est un message test.',
         ]);
@@ -163,15 +164,15 @@ class ModelTest extends TestCase
 
         $product = Product::create([
             'category_id' => $category->id,
-            'name' => 'Collier Favori',
-            'slug' => 'collier-favori',
-            'price' => 700,
-            'stock' => 4,
+            'name'        => 'Collier Favori',
+            'slug'        => 'collier-favori',
+            'price'       => 700,
+            'stock'       => 4,
         ]);
 
         $favorite = Favorite::create([
             'client_token' => 'token-test-123',
-            'product_id' => $product->id,
+            'product_id'   => $product->id,
         ]);
 
         $this->assertDatabaseHas('favorites', ['client_token' => 'token-test-123']);
@@ -187,15 +188,15 @@ class ModelTest extends TestCase
 
         $product = Product::create([
             'category_id' => $category->id,
-            'name' => 'Bague Favorite',
-            'slug' => 'bague-favorite',
-            'price' => 600,
-            'stock' => 6,
+            'name'        => 'Bague Favorite',
+            'slug'        => 'bague-favorite',
+            'price'       => 600,
+            'stock'       => 6,
         ]);
 
         $favorite = Favorite::create([
             'client_token' => 'token-test-456',
-            'product_id' => $product->id,
+            'product_id'   => $product->id,
         ]);
 
         $this->assertEquals($product->id, $favorite->product->id);
