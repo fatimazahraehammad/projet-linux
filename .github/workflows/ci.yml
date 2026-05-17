@@ -116,9 +116,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-
       - name: Installer AWS CLI
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -126,32 +123,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
+      - name: Supprimer ancienne key pair AWS
+        run: |
+          aws ec2 delete-key-pair --key-name projet-linux-key || true
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
       - name: Terraform Init
         working-directory: ./terraform
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: terraform init
-
-      - name: Terraform Import ressources existantes
-        working-directory: ./terraform
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          INSTANCE_ID=$(aws ec2 describe-instances \
-            --filters "Name=tag:Name,Values=projet-linux-server" \
-                      "Name=instance-state-name,Values=running" \
-            --query "Reservations[0].Instances[0].InstanceId" \
-            --output text)
-          terraform import -var="public_key=${{ secrets.SSH_PUBLIC_KEY }}" \
-            aws_security_group.projet_sg sg-07dd99e161c6617aa 2>/dev/null || true
-          terraform import -var="public_key=${{ secrets.SSH_PUBLIC_KEY }}" \
-            aws_key_pair.projet_key projet-linux-key 2>/dev/null || true
-          if [ "$INSTANCE_ID" != "None" ] && [ -n "$INSTANCE_ID" ]; then
-            terraform import -var="public_key=${{ secrets.SSH_PUBLIC_KEY }}" \
-              aws_instance.projet_server $INSTANCE_ID 2>/dev/null || true
-          fi
 
       - name: Terraform Apply
         working-directory: ./terraform
@@ -181,7 +165,7 @@ jobs:
       - name: Récupérer IP du serveur
         id: get_ip
         run: |
-          sleep 30
+          sleep 60
           IP=$(aws ec2 describe-instances \
             --filters "Name=tag:Name,Values=projet-linux-server" \
                       "Name=instance-state-name,Values=running" \
