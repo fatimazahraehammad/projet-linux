@@ -123,9 +123,25 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
-      - name: Supprimer ancienne key pair AWS
+      - name: Nettoyer ressources existantes
         run: |
           aws ec2 delete-key-pair --key-name projet-linux-key || true
+          INSTANCE_ID=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=projet-linux-server" \
+                      "Name=instance-state-name,Values=running" \
+            --query "Reservations[0].Instances[0].InstanceId" \
+            --output text)
+          if [ "$INSTANCE_ID" != "None" ] && [ -n "$INSTANCE_ID" ]; then
+            aws ec2 terminate-instances --instance-ids $INSTANCE_ID
+            aws ec2 wait instance-terminated --instance-ids $INSTANCE_ID
+          fi
+          SG_ID=$(aws ec2 describe-security-groups \
+            --filters "Name=group-name,Values=projet-linux-sg" \
+            --query "SecurityGroups[0].GroupId" \
+            --output text)
+          if [ "$SG_ID" != "None" ] && [ -n "$SG_ID" ]; then
+            aws ec2 delete-security-group --group-id $SG_ID || true
+          fi
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
