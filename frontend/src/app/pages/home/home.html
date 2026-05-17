@@ -68,52 +68,25 @@
     <h2>Coups de cœur</h2>
     <a routerLink="/collections">VOIR TOUT →</a>
   </div>
+
+  
+
   <div class="products-grid">
-
-    <div class="product-card" [routerLink]="['/produit', 1]">
-  <div class="product-img">
-  <img src="images/collier-saphir.jpeg" alt="Collier Saphir Doré" />
-    <span class="badge">NOUVEAU</span>
-  </div>
-  <div class="product-info">
-    <div class="product-name">Collier Saphir Doré</div>
-    <div class="product-mat">OR 18K · VERMEIL</div>
-    <div class="product-bottom">
-      <span class="product-price">890 DH</span>
-      <span class="heart">♡</span>
+    <div class="product-card" *ngFor="let product of products"
+         [routerLink]="['/produit', product.slug]">
+      <div class="product-img">
+        <img [src]="'/images/' + product.image.split('/').pop()?.replace('.jpg', '.jpeg')" [alt]="product.name" />
+        <span class="badge" *ngIf="product.is_new">NOUVEAU</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">{{ product.name }}</div>
+        <div class="product-mat">{{ product.material }}</div>
+        <div class="product-bottom">
+          <span class="product-price">{{ product.price }} DH</span>
+          <span class="heart">♡</span>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
-   <div class="product-card" [routerLink]="['/produit', 2]">
-  <div class="product-img">
-    <img src="images/bague-eternite.jpeg" alt="Bague Éternité" />
-  </div>
-  <div class="product-info">
-    <div class="product-name">Bague Éternité</div>
-    <div class="product-mat">ARGENT · ZIRCON</div>
-    <div class="product-bottom">
-      <span class="product-price">650 DH</span>
-      <span class="heart">♡</span>
-    </div>
-  </div>
-</div>
-
-    <div class="product-card" [routerLink]="['/produit', 3]">
-  <div class="product-img">
-   <img src="images/bracelet-torsade.jpeg" alt="Bracelet Torsadé" />
-    <span class="badge">-15%</span>
-  </div>
-  <div class="product-info">
-    <div class="product-name">Bracelet Torsadé</div>
-    <div class="product-mat">OR ROSE · 14K</div>
-    <div class="product-bottom">
-      <span class="product-price">520 DH</span>
-      <span class="heart">♡</span>
-    </div>
-  </div>
-</div>
-
   </div>
 </section>
 

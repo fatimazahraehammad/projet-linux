@@ -59,10 +59,10 @@
     <div
       class="product-card"
       *ngFor="let p of produitsFiltres; let i = index"
-      [routerLink]="['/produit', p.id]">
+      [routerLink]="['/produit', p.slug]">
 
       <div class="product-img">
-  <img [src]="p.image" [alt]="p.nom" />
+  <img [src]="'/images/' + p.image?.split('/')?.pop()?.replace('.jpg', '.jpeg')" [alt]="p.name" />
   <span class="badge" *ngIf="p.badge">{{ p.badge }}</span>
   <button class="wish-btn" (click)="$event.stopPropagation(); toggleWish(i)">
     {{ wished[i] ? '♥' : '♡' }}
@@ -70,10 +70,10 @@
 </div>
 
       <div class="product-info">
-        <div class="product-name">{{ p.nom }}</div>
-        <div class="product-mat">{{ p.mat }}</div>
+        <div class="product-name">{{ p.name }}</div>
+        <div class="product-mat">{{ p.material }}</div>
         <div class="product-bottom">
-          <span class="product-price">{{ p.prix }} DH</span>
+          <span class="product-price">{{ p.price }} DH</span>
           <span class="product-arrow">→</span>
         </div>
       </div>

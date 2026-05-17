@@ -73,8 +73,6 @@
       </div>
 
       <div class="form-group">
-        <label>PRODUIT SOUHAITÉ</label>
-        <input type="text" placeholder="Ex : Collier Saphir Doré" [(ngModel)]="commande.produit" />
       </div>
 
       <div class="form-group">
@@ -118,18 +116,17 @@
     <div class="commande-recap">
       <p class="about-tag">✦ RÉCAPITULATIF</p>
       <h2>Votre commande</h2>
-
-      <div class="recap-product">
-        <div class="recap-img img-beige"></div>
+      <div *ngFor="let item of panier.items()" class="recap-product">
+        <img [src]="'/images/' + item.image?.split('/')?.pop()?.replace('.jpg', '.jpeg')" class="recap-img" />
         <div class="recap-details">
-          <div class="recap-name">{{ commande.produit || 'Produit non sélectionné' }}</div>
-          <div class="recap-mat">SAYIF Collection</div>
+          <div class="recap-name">{{ item.name }}</div>
+          <div class="recap-mat">{{ item.material }} · Qté: {{ item.qty }}</div>
+          <div class="recap-price">{{ item.price }} DH</div>
         </div>
       </div>
-
       <div class="recap-line">
         <span>Sous-total</span>
-        <span>— DH</span>
+        <span>{{ panier.total() }} DH</span>
       </div>
       <div class="recap-line">
         <span>Livraison</span>
@@ -137,7 +134,7 @@
       </div>
       <div class="recap-line recap-total">
         <span>TOTAL</span>
-        <span>— DH</span>
+        <span>{{ panier.total() }} DH</span>
       </div>
 
       <div class="recap-garanties">

@@ -4,7 +4,7 @@
   <span>›</span>
   <a routerLink="/collections">COLLECTIONS</a>
   <span>›</span>
-  {{ produit?.nom | uppercase }}
+  {{ produit?.name | uppercase }}
 </div>
 
 <!-- PRODUIT PRINCIPAL -->
@@ -14,16 +14,16 @@
   <div class="gallery">
     <div class="gallery-main">
   <div class="gallery-badge" *ngIf="produit?.badge">{{ produit.badge }}</div>
-  <img [src]="produit?.image" [alt]="produit?.nom" style="width:100%; height:100%; object-fit:cover;" />
+  <img [src]="'/images/' + produit?.image?.split('/')?.pop()?.replace('.jpg', '.jpeg')" [alt]="produit?.name" style="width:100%; height:100%; object-fit:cover;" />
 </div>
     
   </div>
 
   <!-- Infos -->
   <div class="product-info">
-    <p class="product-tag">✦ {{ produit?.categorie }}</p>
-    <h1 class="product-title">{{ produit?.nom }}</h1>
-    <p class="product-mat">{{ produit?.mat }}</p>
+    <p class="product-tag">✦ {{ produit?.category?.name }}</p>
+    <h1 class="product-title">{{ produit?.name }}</h1>
+    <p class="product-mat">{{ produit?.material }}</p>
 
     <div class="stars">
       <span class="stars-icons">★★★★★</span>
@@ -33,12 +33,12 @@
     <div class="divider"></div>
 
     <div class="price-row">
-      <span class="price-main">{{ produit?.prix }} DH</span>
-      <span class="price-old" *ngIf="produit?.prixOld">{{ produit.prixOld }} DH</span>
+      <span class="price-main">{{ produit?.price }} DH</span>
+      <span class="price-old" *ngIf="produit?.priceOld">{{ produit.priceOld }} DH</span>
       <span class="price-badge" *ngIf="produit?.badge">{{ produit.badge }}</span>
     </div>
 
-    <p class="product-desc">{{ produit?.desc }}</p>
+    <p class="product-desc">{{ produit?.description }}</p>
 
     <!-- Longueur -->
     <p class="options-label">LONGUEUR</p>

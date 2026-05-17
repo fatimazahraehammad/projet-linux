@@ -34,11 +34,11 @@
   <div *ngIf="panier.count() > 0" class="panier-grid">
     <div class="panier-items">
       <div class="panier-item" *ngFor="let item of panier.items()">
-        <img [src]="item.image" [alt]="item.nom" class="panier-img" />
+        <img [src]="'/images/' + item.image?.split('/')?.pop()?.replace('.jpg', '.jpeg')" [alt]="item.name" class="panier-img" />
         <div class="panier-info">
-          <div class="panier-nom">{{ item.nom }}</div>
-          <div class="panier-mat">{{ item.mat }}</div>
-          <div class="panier-prix">{{ item.prix }} DH</div>
+          <div class="panier-nom">{{ item.name }}</div>
+          <div class="panier-mat">{{ item.material }}</div>
+          <div class="panier-prix">{{ item.price }} DH</div>
         </div>
         <div class="panier-qty">Qté : {{ item.qty }}</div>
         <button class="panier-del" (click)="panier.supprimer(item.id)">✕</button>
