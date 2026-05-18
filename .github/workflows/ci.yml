@@ -207,6 +207,8 @@ jobs:
           ssh -i ~/.ssh/projet-linux-key ubuntu@${{ steps.get_ip.outputs.SERVER_IP }} "
             docker pull projetlinux12/backend-laravel:latest
             docker pull projetlinux12/frontend:latest
-            docker-compose stop
+            docker-compose down
             docker-compose up -d
+            sleep 30
+            docker exec laravel_app php artisan db:seed --force
           "
