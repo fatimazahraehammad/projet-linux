@@ -2,6 +2,7 @@ services:
   backend:
     image: projetlinux12/backend-laravel:latest
     container_name: laravel_app
+    restart: always
     ports:
       - "8000:80"
     environment:
@@ -35,7 +36,6 @@ services:
         condition: service_healthy
     networks:
       - app-network
-    # --force is required to run in non-interactive (production-like) environments
     command: >
       sh -c "php artisan migrate --force &&
              php artisan db:seed --force"
@@ -44,6 +44,7 @@ services:
   frontend:
     image: projetlinux12/frontend:latest
     container_name: angular_app
+    restart: always
     ports:
       - "4200:80"
     depends_on:
@@ -73,10 +74,10 @@ services:
       retries: 5
       start_period: 30s
 
-
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: phpmyadmin
+    restart: always
     ports:
       - "8080:80"
     environment:
