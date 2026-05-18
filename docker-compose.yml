@@ -18,6 +18,28 @@ services:
     networks:
       - app-network
 
+  migrator:
+    image: projetlinux12/backend-laravel:latest
+    container_name: laravel_migrator
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=projet_db
+      - DB_USERNAME=laravel_user
+      - DB_PASSWORD=secret
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - app-network
+    # --force is required to run in non-interactive (production-like) environments
+    command: >
+      sh -c "php artisan migrate --force &&
+             php artisan db:seed --force"
+    restart: "no"
 
   frontend:
     image: projetlinux12/frontend:latest
@@ -44,6 +66,13 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "laravel_user", "-psecret"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
 
   phpmyadmin:
     image: phpmyadmin:latest
