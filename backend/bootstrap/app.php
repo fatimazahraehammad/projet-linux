@@ -51,5 +51,8 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->prepend(\Illuminate\Http\Middleware\HandleCors::class);
+})
 
 return $app;
