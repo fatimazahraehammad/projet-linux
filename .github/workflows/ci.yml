@@ -195,8 +195,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/projet-linux-key
           chmod 600 ~/.ssh/projet-linux-key
-          sleep 30
-          ssh-keyscan -H ${{ steps.get_ip.outputs.SERVER_IP }} >> ~/.ssh/known_hosts
+          sleep 60
+          for i in {1..10}; do
+            ssh-keyscan -H ${{ steps.get_ip.outputs.SERVER_IP }} >> ~/.ssh/known_hosts && break
+            echo "Tentative $i échouée, on réessaie..."
+            sleep 15
+          done
 
       - name: Copier docker-compose.yml
         run: |
