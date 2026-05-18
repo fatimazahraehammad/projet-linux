@@ -20,10 +20,6 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => ['*'],
-    
-    'allowed_origins' => [
-        'http://13.61.164.139:4200',  // your Angular app
-    ],
 
     'allowed_origins_patterns' => [],
 
