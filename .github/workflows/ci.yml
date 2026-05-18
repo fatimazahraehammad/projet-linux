@@ -145,7 +145,7 @@ jobs:
             --query "Reservations[0].Instances[0].InstanceId" \
             --output text)
           terraform import -var="public_key=${{ secrets.SSH_PUBLIC_KEY }}" \
-            aws_security_group.projet_sg sg-07dd99e161c6617aa 2>/dev/null || true
+            aws_security_group.projet_sg sg-0f6d5a37896e64739 2>/dev/null || true
           terraform import -var="public_key=${{ secrets.SSH_PUBLIC_KEY }}" \
             aws_key_pair.projet_key projet-linux-key 2>/dev/null || true
           if [ "$INSTANCE_ID" != "None" ] && [ -n "$INSTANCE_ID" ]; then
