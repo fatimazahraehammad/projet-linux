@@ -219,4 +219,4 @@ jobs:
             docker-compose up -d
             sleep 30
             docker exec laravel_app php artisan db:seed --force
-          "
+          " 
